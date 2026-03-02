@@ -46,6 +46,13 @@ function placePiece(col) {
                 return;
             }
 
+            // Check voor gelijkspel
+if (!board.flat().includes(null)) {
+    status.textContent = "🤝 Gelijkspel!";
+    gameOver = true;
+    return;
+}
+
             currentPlayer = currentPlayer === 'red' ? 'yellow' : 'red';
             status.textContent = 
                 (currentPlayer === 'red' ? "🔴 Rood is aan de beurt" : "🟡 Geel is aan de beurt");
