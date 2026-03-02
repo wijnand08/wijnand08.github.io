@@ -2,12 +2,18 @@ const rows = 6;
 const cols = 7;
 let board = [];
 let currentPlayer = 'red';
+let gameOver = false;
+
 const boardElement = document.getElementById('board');
 const status = document.getElementById('status');
+const resetBtn = document.getElementById('resetBtn');
 
 function createBoard() {
     board = [];
     boardElement.innerHTML = '';
+    gameOver = false;
+    currentPlayer = 'red';
+    status.textContent = "Rood is aan de beurt";
 
     for (let r = 0; r < rows; r++) {
         board[r] = [];
@@ -26,15 +32,23 @@ function createBoard() {
 }
 
 function placePiece(col) {
+    if (gameOver) return;
+
     for (let r = rows - 1; r >= 0; r--) {
         if (!board[r][col]) {
             board[r][col] = currentPlayer;
             updateBoard();
+
             if (checkWinner(r, col)) {
-                status.textContent = currentPlayer + " wint!";
+                status.textContent = 
+                    (currentPlayer === 'red' ? "🔴 Rood wint!" : "🟡 Geel wint!");
+                gameOver = true;
                 return;
             }
+
             currentPlayer = currentPlayer === 'red' ? 'yellow' : 'red';
+            status.textContent = 
+                (currentPlayer === 'red' ? "🔴 Rood is aan de beurt" : "🟡 Geel is aan de beurt");
             return;
         }
     }
@@ -82,5 +96,7 @@ function countPieces(row, col, dr, dc) {
 
     return count;
 }
+
+resetBtn.addEventListener('click', createBoard);
 
 createBoard();

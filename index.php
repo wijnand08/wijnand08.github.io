@@ -13,6 +13,9 @@
 <div id="board"></div>
 <p id="status"></p>
 
+<button id="resetBtn">Nieuw spel</button>
+<p id="status"></p>
+
 <script src="script.js"></script>
 
 <script>
